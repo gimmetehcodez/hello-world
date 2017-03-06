@@ -1,4 +1,4 @@
-OBJ := hello.o
+OBJ := main.o
 CC := gcc
 CFLAGS := -g -Wall
 
