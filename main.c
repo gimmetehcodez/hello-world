@@ -7,7 +7,11 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: hello-world <FILENAME>\n");
         return -1;
     }
-    
+
+    char filename[1024];
+    memset(filename, 0, 1024);                     /* avoid STRTOK errors */
+    memcpy(filename, argv[1], strlen(argv[1]));
+
     strtok(argv[1], ".");
     const char *extension = strtok(NULL, "");
     
@@ -16,14 +20,14 @@ int main(int argc, char *argv[])
         return -1;
     }
     
-    FILE *input = fopen(argv[1], "r");
+    FILE *input = fopen(filename, "r");
     
     if (!input) {
-        fprintf(stderr, "Error: Couldn't open file %s\n", argv[1]);
+        fprintf(stderr, "Error: Couldn't open file %s\n", filename);
         return -1;
     }
     
-    if (getchar(input) != EOF) {
+    if (getc(input) != EOF) {
         fprintf(stderr, "Error: File %s not empty!\n", argv[1]);
         return -1;
     }
